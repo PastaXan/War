@@ -70,7 +70,7 @@ public class QueueArray<Item> implements Iterable<Item>, Queue<Item>{
 
     private void resize(int capacity) {
         //TODO : Implement the resize method and use it in the correct spots in QueueArray
-        Item[] newItemsArray = (Item[]) new Object[capacity];
+        Item[] newItemsArray = (Item[]) (new Object[capacity]);
 
         for(int i=0; i<size; i++){
             newItemsArray[i] = items[(head+i)% items.length];
@@ -105,7 +105,7 @@ public class QueueArray<Item> implements Iterable<Item>, Queue<Item>{
              */
             public boolean hasNext() {
                 //TODO Implement the hasNext() method
-                return pos<tail;
+                return count<size;
             }
 
             /**
@@ -119,7 +119,13 @@ public class QueueArray<Item> implements Iterable<Item>, Queue<Item>{
                 //TODO Implement the next() method
                 if(!hasNext()){throw new NoSuchElementException("Last index reached: next()");}
                 Item item = items[pos++];
+
+                if (pos == items.length) {
+                    pos = 0;
+                }
+
                 count++;
+
                 return item;
 
             }
