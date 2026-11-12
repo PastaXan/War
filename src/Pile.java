@@ -10,6 +10,13 @@ public class Pile extends QueueArray<Card> {
         //   Pile pile = new Pile("As 2s 3s Jh Qh Kh 4d 5d 6d 7c 8c 9c");
 
         // TODO: implement pile constructor
+        if(cards!="") {
+            String[] cds = cards.split(" ");
+            for (int i = 0; i < cds.length; i++) {
+                char[] ch = cds[i].toCharArray();
+                enqueue(new Card(ch[0], ch[1]));
+            }
+        }
     }
 
     public String toString() {
@@ -23,7 +30,15 @@ public class Pile extends QueueArray<Card> {
         //   Kc  Td  Jc  Th  9s  Kd
         // TODO: implement toString. Use a  'for (Card card : this) {}' loop to print them
         String output = "";
-
+        int l=0;
+        for(Card card: this){
+            if(l==10){
+                output += System.lineSeparator();
+                l=0;
+            }
+            output += card+"  ";
+            l++;
+        }
         return output;
 
     }
@@ -37,5 +52,20 @@ public class Pile extends QueueArray<Card> {
      */
     public void shuffle() {
         // TODO: implement the riffle shuffle
+        Pile half1 = new Pile("");
+        Pile half2 = new Pile("");
+        for(int i=0;i<size()/2+1;i++) {
+            half1.enqueue(dequeue());
+        }
+
+        while (!isEmpty()) {
+            half2.enqueue(dequeue());
+        }
+
+        while(!half2.isEmpty()){
+            this.enqueue(half1.dequeue());
+            this.enqueue(half2.dequeue());
+        }
+
     }
 }
